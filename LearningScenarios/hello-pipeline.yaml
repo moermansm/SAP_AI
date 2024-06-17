@@ -8,7 +8,7 @@ metadata:
     executables.ai.sap.com/description: "test bug SAP AI Core"
     executables.ai.sap.com/name: "test bug"
   labels:
-    scenarios.ai.sap.com/id: "test bug"
+    scenarios.ai.sap.com/id: "test-bug"
     ai.sap.com/version: "1.0"
 spec:
   entrypoint: mypipeline
