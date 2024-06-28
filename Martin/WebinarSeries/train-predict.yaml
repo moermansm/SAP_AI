@@ -9,13 +9,16 @@ metadata:
     executables.ai.sap.com/description: "Train the model and return predictions in SAP HANA"
   labels:
     scenarios.ai.sap.com/id: "hana-ml-demand-forecasting" # The scenario ID to which the serving template belongs
-    ai.sap.com/version: "0.0.1"
+    ai.sap.com/version: "0.0.2"
 spec:
   imagePullSecrets:
     - name: mm-credentials-docker # your docker registry secret
   entrypoint: train-predict
   templates:
   - name: train-predict
+    metadata:
+        labels:
+          ai.sap.com/resourcePlan: Basic-8x
     container:
       image: docker.io/moermansm/webinar-series:01 # Your docker image name
       command: ["/bin/sh", "-c"]
