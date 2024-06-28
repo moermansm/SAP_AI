@@ -17,7 +17,7 @@ spec:
   templates:
   - name: train-predict
     container:
-      image: docker.io/YOURUSERHERE/hana-ml-car-price-training:01 # Your docker image name
+      image: docker.io/moermansm/webinar-series:01 # Your docker image name
       command: ["/bin/sh", "-c"]
       args:
         - "python /app/src/train-predict.py"
