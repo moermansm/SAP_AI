@@ -16,14 +16,11 @@ spec:
   entrypoint: train-predict
   templates:
   - name: train-predict
-    metadata:
-        labels:
-          ai.sap.com/resourcePlan: Basic-8x
     container:
       image: docker.io/moermansm/webinar-series:02 # Your docker image name
       command: ["/bin/sh", "-c"]
       args:
-        - "python /app/src/train-predict.py"
+        - "python /app/src/main.py"
       env:
       - name: HANA_ADDRESS # Name of the environment variable that will be available in the image
         valueFrom:
