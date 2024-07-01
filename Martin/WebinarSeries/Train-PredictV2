@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: hana-ml-demand-forecasting-training-predictions-v2 # Executable ID (max length 64 lowercase-hyphen-separated), please modify this to any value if you are not the only user of your SAP AI Core instance. Example: `first-pipeline-1234`
+  annotations:
+    scenarios.ai.sap.com/name: "Webinar series: HANA ML Demand Forecasting"
+    scenarios.ai.sap.com/description: "Training and predictons for demand with SAP HANA Machine Learning"
+    executables.ai.sap.com/name: "Webinar series: HANA ML Demand Forecasting - Training-Predicitons Workflow"
+    executables.ai.sap.com/description: "Train the model and return predictions in SAP HANA"
+  labels:
+    scenarios.ai.sap.com/id: "hana-ml-demand-forecasting" # The scenario ID to which the serving template belongs
+    ai.sap.com/version: "0.1.1"
+spec:
+  imagePullSecrets:
+    - name: mm-credentials-docker # your docker registry secret
+  entrypoint: train-predict
+  templates:
+  - name: train-predict
+    metadata:
+        labels:
+          ai.sap.com/resourcePlan: Basic-8x
+    container:
+      image: docker.io/moermansm/webinar-series:02 # Your docker image name
+      command: ["/bin/sh", "-c"]
+      args:
+        - "python /app/src/train-predict.py"
+      env:
+      - name: HANA_ADDRESS # Name of the environment variable that will be available in the image
+        valueFrom:
+          secretKeyRef:
+            name: hana-cred  # Name of the generic secret created in SAP AI Core for the Resource Group
+            key: address    # Name of the key from the JSON string that is saved as generic secret    
+      - name: HANA_PORT 
+        valueFrom:
+          secretKeyRef:
+            name: hana-cred   
+            key: port    
+      - name: HANA_USER 
+        valueFrom:
+          secretKeyRef:
+            name: hana-cred   
+            key: user   
+      - name: HANA_PASSWORD 
+        valueFrom:
+          secretKeyRef:
+            name: hana-cred   
+            key: password   
