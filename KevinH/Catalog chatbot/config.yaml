@@ -14,28 +14,8 @@ spec:
   imagePullSecrets:
     - name: credstutorialrepo-kho # your docker registry secret
      container:
-      image:  # Your docker image name
+      image: kevindlw/product-catalog-chatbot:0.1 # Your docker image name
       command: ["/bin/sh", "-c"]
       args:
-        - "python /app/src/main.py"
-      env:
-      - name: HANA_ADDRESS # Name of the environment variable that will be available in the image
-        valueFrom:
-          secretKeyRef:
-            name: hana-cred  # Name of the generic secret created in SAP AI Core for the Resource Group
-            key: address    # Name of the key from the JSON string that is saved as generic secret    
-      - name: HANA_PORT 
-        valueFrom:
-          secretKeyRef:
-            name: hana-cred   
-            key: port    
-      - name: HANA_USER 
-        valueFrom:
-          secretKeyRef:
-            name: hana-cred   
-            key: user   
-      - name: HANA_PASSWORD 
-        valueFrom:
-          secretKeyRef:
-            name: hana-cred   
-            key: password   
+        - "python /app/main.py"
+     
