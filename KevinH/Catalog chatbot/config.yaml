@@ -14,7 +14,7 @@ spec:
   imagePullSecrets:
     - name: credstutorialrepo-kho # your docker registry secret
      container:
-      image: kevindlw/product-catalog-chatbot:0.1 # Your docker image name
+      image: kevindlw/product-catalog-chatbot:0.2 # Your docker image name
       command: ["/bin/sh", "-c"]
       args:
         - "python /app/main.py"
