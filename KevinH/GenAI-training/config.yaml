@@ -1,0 +1,21 @@
+version: 1.0.0
+resources:
+  default: 
+    # Docker image built from the Dockerfile in the project directory
+    image: <docker_image_name>
+services:
+  main:
+    replicas: 1
+    entrypoint: ["python", "main.py"]
+    resources: 
+      memory: 1Gi
+      cpu: 500m
+    environment:
+      - AICORE_AUTH_URL=${AICORE_AUTH_URL}
+      - AICORE_CLIENT_ID=${AICORE_CLIENT_ID}
+      - AICORE_CLIENT_SECRET=${AICORE_CLIENT_SECRET}
+      - AICORE_BASE_URL=${AICORE_BASE_URL}
+      - HANA_DB_ADDRESS=${HANA_DB_ADDRESS}
+      - HANA_DB_PORT=${HANA_DB_PORT}
+      - HANA_DB_USER=${HANA_DB_USER}
+      - HANA_DB_PASSWORD=${HANA_DB_PASSWORD}
