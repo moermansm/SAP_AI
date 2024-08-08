@@ -1,21 +1,36 @@
-version: 1.0.0
-resources:
-  default: 
-    # Docker image built from the Dockerfile in the project directory
-    image: kevindlw/genai-training:0.1
-services:
-  main:
-    replicas: 1
-    entrypoint: ["python", "main.py"]
-    resources: 
-      memory: 1Gi
-      cpu: 500m
-    environment:
-      - AICORE_AUTH_URL=${AICORE_AUTH_URL}
-      - AICORE_CLIENT_ID=${AICORE_CLIENT_ID}
-      - AICORE_CLIENT_SECRET=${AICORE_CLIENT_SECRET}
-      - AICORE_BASE_URL=${AICORE_BASE_URL}
-      - HANA_DB_ADDRESS=${HANA_DB_ADDRESS}
-      - HANA_DB_PORT=${HANA_DB_PORT}
-      - HANA_DB_USER=${HANA_DB_USER}
-      - HANA_DB_PASSWORD=${HANA_DB_PASSWORD}
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: hana-ml-demand-forecasting-training-predictions # Executable ID (max length 64 lowercase-hyphen-separated), please modify this to any value if you are not the only user of your SAP AI Core instance. Example: `first-pipeline-1234`
+  annotations:
+    scenarios.ai.sap.com/name: "genAI training scenario: Product catalog chatbot"
+    scenarios.ai.sap.com/description: "A chatbot trained on a product catalog"
+    executables.ai.sap.com/name: "genAI training executable: Product catalog chatbot"
+    executables.ai.sap.com/description: "A chatbot trained on a product catalog"
+  labels:
+    scenarios.ai.sap.com/id: "genai-training-product-catalog-chatbot" # The scenario ID to which the serving template belongs
+    ai.sap.com/version: "0.0.1"
+spec:
+  imagePullSecrets:
+    - name: credstutorialrepo-kho # your docker registry secret
+  entrypoint: genai-training
+  templates:
+  - name: genai-training
+    metadata:
+        labels:
+          ai.sap.com/resourcePlan: Basic-8x
+    container:
+      image: kevindlw/genai-training:0.1 # Your docker image name
+      command: ["/bin/sh", "-c"]
+      args:
+        - "python /app/src/train-predict.py"
+     environment:
+          - AICORE_AUTH_URL=${AICORE_AUTH_URL}
+          - AICORE_CLIENT_ID=${AICORE_CLIENT_ID}
+          - AICORE_CLIENT_SECRET=${AICORE_CLIENT_SECRET}
+          - AICORE_BASE_URL=${AICORE_BASE_URL}
+          - HANA_DB_ADDRESS=${HANA_DB_ADDRESS}
+          - HANA_DB_PORT=${HANA_DB_PORT}
+          - HANA_DB_USER=${HANA_DB_USER}
+          - HANA_DB_PASSWORD=${HANA_DB_PASSWORD}
+   
