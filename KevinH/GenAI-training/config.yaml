@@ -20,7 +20,7 @@ spec:
         labels:
           ai.sap.com/resourcePlan: Basic-8x
     container:
-      image: kevindlw/genai-training:0.1 # Your docker image name
+      image: docker.io/kevindlw/genai-training:0.1 # Your docker image name
       command: ["/bin/sh", "-c"]
       args:
         - "python /app/src/train-predict.py"
