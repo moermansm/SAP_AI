@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: hana-ml-demand-forecasting-training-predictions # Executable ID (max length 64 lowercase-hyphen-separated), please modify this to any value if you are not the only user of your SAP AI Core instance. Example: `first-pipeline-1234`
+  name: genai-training-product-catalog # Executable ID (max length 64 lowercase-hyphen-separated), please modify this to any value if you are not the only user of your SAP AI Core instance. Example: `first-pipeline-1234`
   annotations:
     scenarios.ai.sap.com/name: "genAI training scenario: Product catalog chatbot"
     scenarios.ai.sap.com/description: "A chatbot trained on a product catalog"
