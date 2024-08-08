@@ -2,7 +2,7 @@ version: 1.0.0
 resources:
   default: 
     # Docker image built from the Dockerfile in the project directory
-    image: <docker_image_name>
+    image: kevindlw/genai-training:0.1
 services:
   main:
     replicas: 1
