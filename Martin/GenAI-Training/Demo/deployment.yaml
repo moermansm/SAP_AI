@@ -9,7 +9,7 @@ metadata:
     executables.ai.sap.com/name: "rag-qa"
   labels:
     scenarios.ai.sap.com/id: "rag-qa"
-    ai.sap.com/version: "1.1"
+    ai.sap.com/version: "1.2"
 spec:
   template:
     apiVersion: "serving.kserve.io/v1beta1"
@@ -29,6 +29,15 @@ spec:
         containers:
         - name: kserve-container
           image: docker.io/moermansm/rag-deployment:01  # Replace with your Docker image
+          resources:
+            requests:
+              cpu: "14"  # Match with infer.l plan
+              memory: "55Gi"
+              nvidia.com/gpu: "1"  # Ensure you request a GPU if needed
+            limits:
+              cpu: "14"
+              memory: "55Gi"
+              nvidia.com/gpu: "1"
           ports:
             - containerPort: 9001  # Update to match the port in your Flask app
               protocol: TCP
